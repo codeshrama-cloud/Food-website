@@ -296,7 +296,7 @@ p{
 
 /* 9 Team section */
 .team{
-  background-color:var(--secondry-color);
+  background-color:var(--primary-color);
 }
 .team .card{
   background-color: var(--black-color);
@@ -315,7 +315,7 @@ p{
 .team p{
   color:var(--text-white);
 }
-.social-icon i{
+/* .social-icon i{
   font-size:1.125rem;
   transition:0.3s all ease;
   margin:0.3125rem;
@@ -325,11 +325,11 @@ p{
   width:2.1875rem;
   height:2.1875rem;
   line-height: 2.1875rem;
-}
-.social-icon i:hover{
+} */
+/* .social-icon i:hover{
   background-color: var(--white-color);
   color:var(--text-primary);
-}
+} */
 
 /* 10 Book Food */
 .book-food{
@@ -345,11 +345,11 @@ p{
   color:var(--text-primary);
 }
 
-.download-app{
+/* .download-app{
   width:100%;
   background:url("images/bg/bg-5.jpg") no-repeat left;
   background-size: cover;
-}
+} */
 
 /* 11 Footer Section */
 .footer{
