@@ -121,7 +121,6 @@ p{
   background-color: transparent;
   color:var(--text-primary);
 }
-
 .wrapper{
   padding-top:6.25rem;
   padding-bottom:6.25rem;
@@ -187,7 +186,7 @@ p{
 }
 
 /* 4 counter Design */
-.counter-section{
+/* .counter-section{
   background-color:var(--black-color);
   padding:2.5rem 0;
 }
@@ -198,7 +197,7 @@ p{
   color:var(--text-white);
   text-transform: uppercase;
   margin-bottom:0;
-}
+} */
 
 /*5 About Section */
 .about-section{
@@ -233,7 +232,7 @@ p{
   text-align: center;
 }
 
-/* Explore Foos Section */
+/* Explore Foods Section */
 .explore-food{
   background-color: var(--secondry-color);
 }
@@ -296,7 +295,7 @@ p{
 
 /* 9 Team section */
 .team{
-  background-color:var(--primary-color);
+  background-color:var(--secondry-color);
 }
 .team .card{
   background-color: var(--black-color);
@@ -315,22 +314,6 @@ p{
 .team p{
   color:var(--text-white);
 }
-/* .social-icon i{
-  font-size:1.125rem;
-  transition:0.3s all ease;
-  margin:0.3125rem;
-  background-color:var(--primary-color);
-  color:var(--text-white);
-  border-radius: 50%;
-  width:2.1875rem;
-  height:2.1875rem;
-  line-height: 2.1875rem;
-} */
-/* .social-icon i:hover{
-  background-color: var(--white-color);
-  color:var(--text-primary);
-} */
-
 /* 10 Book Food */
 .book-food{
   width:100%;
@@ -345,11 +328,11 @@ p{
   color:var(--text-primary);
 }
 
-/* .download-app{
+.download-app{
   width:100%;
   background:url("images/bg/bg-5.jpg") no-repeat left;
   background-size: cover;
-} */
+}
 
 /* 11 Footer Section */
 .footer{
