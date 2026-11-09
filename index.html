@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,6 +52,15 @@
               <a class="nav-link" href="#team">Team</a>
             </li>
 
+
+            <li class="nav-item">
+              <a class="nav-link cart-nav-link" href="#cart" aria-label="Shopping cart">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-nav-text">Cart</span>
+                <span id="cart-count" class="cart-count" aria-live="polite">0</span>
+              </a>
+            </li>
+
             <li>
               <button class="main-btn">Contact Us</button>
             </li>
@@ -75,9 +85,9 @@
               the best flavors straight to your table.
             </p>
 
-            <button class="main-btn mt-4">
-              Order Now <i class="fas fa-shopping-basket ps-3"></i>
-            </button>
+            <a href="#explore-food" class="main-btn mt-4">
+    Order Now <i class="fas fa-shopping-basket ps-3"></i>
+</a>
 
           </div>
         </div>
@@ -175,7 +185,7 @@
                             <h4>Classic Cheese Burger</h4>
                             <p>Time: 15 - 20 Minutes | Serves: 1</p>
                             <span>₹120 <del>₹180</del></span>
-                            <button class="mt-4 main-btn">Order Now</button>
+                            <button class="mt-4 main-btn add-to-cart-btn" type="button" data-name="Classic Cheese Burger" data-price="120"><i class="fas fa-cart-plus me-2"></i>Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -187,7 +197,7 @@
                             <h4>Margherita Pizza</h4>
                             <p>Time: 20 - 25 Minutes | Serves: 1</p>
                             <span>₹199 <del>₹250</del></span>
-                            <button class="mt-4 main-btn">Order Now</button>
+                            <button class="mt-4 main-btn add-to-cart-btn" type="button" data-name="Margherita Pizza" data-price="199"><i class="fas fa-cart-plus me-2"></i>Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -199,7 +209,7 @@
                             <h4>Italian White Sauce Pasta</h4>
                             <p>Time: 20 - 25 Minutes | Serves: 1</p>
                             <span>₹180 <del>₹230</del></span>
-                            <button class="mt-4 main-btn">Order Now</button>
+                            <button class="mt-4 main-btn add-to-cart-btn" type="button" data-name="Italian White Sauce Pasta" data-price="180"><i class="fas fa-cart-plus me-2"></i>Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -211,7 +221,7 @@
                             <h4>Special Chicken Biryani</h4>
                             <p>Time: 30 - 35 Minutes | Serves: 1</p>
                             <span>₹220 <del>₹280</del></span>
-                            <button class="mt-4 main-btn">Order Now</button>
+                            <button class="mt-4 main-btn add-to-cart-btn" type="button" data-name="Special Chicken Biryani" data-price="220"><i class="fas fa-cart-plus me-2"></i>Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -223,7 +233,7 @@
                             <h4>Fresh Vegetable Salad</h4>
                             <p>Time: 10 - 15 Minutes | Serves: 1</p>
                             <span>₹100 <del>₹140</del></span>
-                            <button class="mt-4 main-btn">Order Now</button>
+                            <button class="mt-4 main-btn add-to-cart-btn" type="button" data-name="Fresh Vegetable Salad" data-price="100"><i class="fas fa-cart-plus me-2"></i>Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -235,7 +245,7 @@
                             <h4>Grilled Cheese Sandwich</h4>
                             <p>Time: 10 - 15 Minutes | Serves: 1</p>
                             <span>₹90 <del>₹130</del></span>
-                            <button class="mt-4 main-btn">Order Now</button>
+                            <button class="mt-4 main-btn add-to-cart-btn" type="button" data-name="Grilled Cheese Sandwich" data-price="90"><i class="fas fa-cart-plus me-2"></i>Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -247,7 +257,7 @@
                             <h4>Chocolate Cream Cake</h4>
                             <p>Time: 5 - 10 Minutes | Serves: 1</p>
                             <span>₹150 <del>₹200</del></span>
-                            <button class="mt-4 main-btn">Order Now</button>
+                            <button class="mt-4 main-btn add-to-cart-btn" type="button" data-name="Chocolate Cream Cake" data-price="150"><i class="fas fa-cart-plus me-2"></i>Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -259,7 +269,7 @@
                             <h4>Strawberry Dessert</h4>
                             <p>Time: 5 - 10 Minutes | Serves: 1</p>
                             <span>₹130 <del>₹170</del></span>
-                            <button class="mt-4 main-btn">Order Now</button>
+                            <button class="mt-4 main-btn add-to-cart-btn" type="button" data-name="Strawberry Dessert" data-price="130"><i class="fas fa-cart-plus me-2"></i>Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -271,7 +281,7 @@
                             <h4>Chocolate Donuts</h4>
                             <p>Time: 5 - 10 Minutes | Serves: 2</p>
                             <span>₹110 <del>₹150</del></span>
-                            <button class="mt-4 main-btn">Order Now</button>
+                            <button class="mt-4 main-btn add-to-cart-btn" type="button" data-name="Chocolate Donuts" data-price="110"><i class="fas fa-cart-plus me-2"></i>Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -281,6 +291,41 @@
     </div>
 </section>
 
+
+
+<section id="cart" class="cart-section wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2>Your Shopping Cart</h2>
+        <p class="cart-intro">Review your selected meals before checkout.</p>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="cart-panel">
+          <div id="cart-items" class="cart-items" aria-live="polite">
+            <div class="empty-cart">
+              <i class="fas fa-shopping-basket"></i>
+              <h4>Your cart is empty</h4>
+              <p>Add something delicious from our menu!</p>
+              <a href="#explore-food" class="main-btn">Explore Foods</a>
+            </div>
+          </div>
+          <div class="cart-summary">
+            <div class="cart-total-row">
+              <span>Total</span>
+              <strong id="cart-total">₹0</strong>
+            </div>
+            <button id="checkout-btn" class="main-btn checkout-btn" type="button" disabled>
+              Proceed to Checkout <i class="fas fa-arrow-right ms-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
   <section id="testimonial">
     <div class="wrapper testimonial-section">
@@ -499,7 +544,7 @@
   </section>
 
   <footer id="footer">
-    <div class="footer py-5">
+    <div class="footer py-4">
       <div class="container">
 
         <div class="row">
