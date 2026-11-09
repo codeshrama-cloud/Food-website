@@ -86,16 +86,237 @@ function showMessage(message) {
     }, 2500);
 }
 
-let orderButtons = document.querySelectorAll("#explore-food .card button");
+// Feastify shopping cart
 
-orderButtons.forEach(function (button) {
-    button.addEventListener("click", function () {
-        let card = button.closest(".card");
-        let item = card.querySelector("h4").textContent;
+const cart = new Map();
+const cartItemsContainer = document.getElementById("cart-items");
+const cartCountElement = document.getElementById("cart-count");
+const cartTotalElement = document.getElementById("cart-total");
+const checkoutButton = document.getElementById("checkout-btn");
 
-        showMessage(item + " added to your order!");
+function formatPrice(amount) {
+    return "₹" + amount.toLocaleString("en-IN");
+}
+
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, function (character) {
+        return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;"
+        }[character];
     });
+}
+
+function updateMenuControls() {
+    document.querySelectorAll("#explore-food .card").forEach(function (card) {
+        let button = card.querySelector(".add-to-cart-btn");
+        let control = card.querySelector(".menu-quantity");
+
+        let name;
+        let price;
+        let id;
+
+        if (button) {
+            name = button.dataset.name;
+            price = Number(button.dataset.price);
+            id = name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+        } else if (control) {
+            name = control.dataset.name;
+            price = Number(control.dataset.price);
+            id = control.dataset.id;
+        } else {
+            return;
+        }
+
+        let item = cart.get(id);
+
+        if (item) {
+            if (!control) {
+                control = document.createElement("div");
+                control.className = "menu-quantity";
+                control.dataset.id = id;
+                control.dataset.name = name;
+                control.dataset.price = price;
+                button.replaceWith(control);
+            }
+
+            control.innerHTML = `
+                <button type="button" class="menu-qty-btn menu-decrease">−</button>
+                <span class="menu-qty-value">${item.quantity}</span>
+                <button type="button" class="menu-qty-btn menu-increase">+</button>
+            `;
+        } else if (control) {
+            button = document.createElement("button");
+            button.type = "button";
+            button.className = "mt-4 main-btn add-to-cart-btn";
+            button.dataset.name = name;
+            button.dataset.price = price;
+            button.innerHTML = '<i class="fas fa-cart-plus me-2"></i>Add to Cart';
+            control.replaceWith(button);
+        }
+    });
+}
+
+function renderCart() {
+    if (!cartItemsContainer) return;
+
+    const entries = Array.from(cart.values());
+
+    const count = entries.reduce(function (sum, item) {
+        return sum + item.quantity;
+    }, 0);
+
+    const total = entries.reduce(function (sum, item) {
+        return sum + item.price * item.quantity;
+    }, 0);
+
+    cartCountElement.textContent = count;
+    cartTotalElement.textContent = formatPrice(total);
+    checkoutButton.disabled = entries.length === 0;
+
+    if (!entries.length) {
+        cartItemsContainer.innerHTML = `
+            <div class="empty-cart">
+                <i class="fas fa-shopping-basket"></i>
+                <h4>Your cart is empty</h4>
+                <p>Add something delicious from our menu!</p>
+                <a href="#explore-food" class="main-btn">Explore Foods</a>
+            </div>
+        `;
+    } else {
+        cartItemsContainer.innerHTML = entries.map(function (item) {
+            return `
+                <div class="cart-item">
+                    <div class="cart-item-info">
+                        <h4>${escapeHTML(item.name)}</h4>
+                        <span class="cart-item-price">${formatPrice(item.price)} each</span>
+                    </div>
+
+                    <div class="cart-item-controls">
+                        <div class="quantity-control">
+                            <button type="button" class="quantity-btn decrease-quantity" data-id="${item.id}">−</button>
+                            <span class="quantity-value">${item.quantity}</span>
+                            <button type="button" class="quantity-btn increase-quantity" data-id="${item.id}">+</button>
+                        </div>
+
+                        <strong class="cart-line-total">${formatPrice(item.price * item.quantity)}</strong>
+
+                        <button type="button" class="remove-cart-item" data-id="${item.id}">
+                            <i class="fas fa-trash-alt"></i> Remove
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join("");
+    }
+
+    updateMenuControls();
+}
+
+document.querySelector("#explore-food").addEventListener("click", function (event) {
+    const addButton = event.target.closest(".add-to-cart-btn");
+    const increaseButton = event.target.closest(".menu-increase");
+    const decreaseButton = event.target.closest(".menu-decrease");
+
+    if (addButton) {
+        const name = addButton.dataset.name;
+        const price = Number(addButton.dataset.price);
+        const id = name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+        if (cart.has(id)) {
+            cart.get(id).quantity++;
+        } else {
+            cart.set(id, {
+                id: id,
+                name: name,
+                price: price,
+                quantity: 1
+            });
+        }
+
+        showMessage(name + " added to your cart!");
+        renderCart();
+    }
+
+    if (increaseButton) {
+        const control = increaseButton.closest(".menu-quantity");
+        const item = cart.get(control.dataset.id);
+
+        if (item) {
+            item.quantity++;
+            renderCart();
+        }
+    }
+
+    if (decreaseButton) {
+        const control = decreaseButton.closest(".menu-quantity");
+        const item = cart.get(control.dataset.id);
+
+        if (item) {
+            item.quantity--;
+
+            if (item.quantity <= 0) {
+                cart.delete(item.id);
+            }
+
+            renderCart();
+        }
+    }
 });
+
+cartItemsContainer.addEventListener("click", function (event) {
+    const increase = event.target.closest(".increase-quantity");
+    const decrease = event.target.closest(".decrease-quantity");
+    const remove = event.target.closest(".remove-cart-item");
+
+    if (increase) {
+        const item = cart.get(increase.dataset.id);
+        if (item) item.quantity++;
+    } else if (decrease) {
+        const item = cart.get(decrease.dataset.id);
+
+        if (item) {
+            item.quantity--;
+
+            if (item.quantity <= 0) {
+                cart.delete(item.id);
+            }
+        }
+    } else if (remove) {
+        cart.delete(remove.dataset.id);
+    } else {
+        return;
+    }
+
+    renderCart();
+});
+
+checkoutButton.addEventListener("click", function () {
+    if (!cart.size) return;
+
+    const items = Array.from(cart.values());
+
+    const total = items.reduce(function (sum, item) {
+        return sum + item.price * item.quantity;
+    }, 0);
+
+    const summary = items.map(function (item) {
+        return `${item.name} × ${item.quantity} = ${formatPrice(item.price * item.quantity)}`;
+    }).join("\n");
+
+    alert(
+        "Feastify Order Summary\n\n" +
+        summary +
+        "\n\nTotal: " + formatPrice(total) +
+        "\n\nDemo checkout only — connect a payment provider to accept real payments."
+    );
+});
+
+renderCart();
+
 
 let mainButtons = document.querySelectorAll(".main-btn");
 
@@ -182,9 +403,3 @@ revealItems.forEach(function (item) {
 
     observer.observe(item);
 });
-
-//   counter("count1", 0, 1287, 3000);
-//   counter("count2", 100, 4500, 2500);
-//   counter("count3", 0, 2860, 3000);
-//   counter("count4", 0, 3942, 3000);
-// });
